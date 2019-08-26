@@ -1,0 +1,104 @@
+* Para abrir Cassandra es primero correr el servidor con el comando “cassandra”.
+
+* Y en otra terminal abrimos cqlsh y ya nos abre la terminal de casandra.
+
+* Una primary key tiene que tener una partition key + clustering key.
+
+* En cassandra hay central consistency, no son buenas para transacciones, por que no se puede tener todo almacenado y se puede acceder a diferentes cosas.
+
+* Para que todo funcione bien en cassandra tenemos que tener bien definidos las primary key.
+
+* Se tiene mucha redundancia, se tiene query que son mas rápidas.
+
+* Insert and update son muy parecidas hay que tener cuidado con eso, por que podemos llegar a sobreescribir los datos. 
+
+- Keyspaces -> database
+- Coulmnfamilies -> table
+- describe -> nos muestra todos los keyspaces
+- Cambiar a un keyspace -> use nombre del archivo;
+
+ -- Pk: 2403, pk; 2019-08-23, pk:’matricula’, pk:’TC301’, 2 
+
+* Creación de keyspace
+
+  CREATE KEYSPACE IF NOT EXISTS attendance 
+  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+
+* Creacion column family (create table)
+
+  CREATE TABLE attendance.daily_attendance (
+  classroomid text PRIMARY KEY, classdate text, studentid text, courseid text,
+  attendance int );
+
+  CREATE TABLE attendance.daily_attendance_v2 (
+  classroomid text, classdate text, studentid text, courseid text, attendance int,
+  PRIMARY KEY(classroomid, classdate, studentid, courseid));
+
+  CREATE TABLE attendance.daily_attendance_by_studentid (
+  classroomid text, classdate text, studentid text, courseid text, attendance int,
+  PRIMARY KEY(studentid, courseid, classdate, classroomid));
+
+  CREATE TABLE attendance.total_attendance_by_studentid (
+  studentid text, courseid text, period text, totalattendance int,
+  PRIMARY KEY(studentid, courseid, period));
+
+CREATE TABLE attendance.total_attendance_by_semester
+(
+courseid text,
+period text,
+totalattendance int,
+PRIMARY KEY(courseid, period)
+);
+
+
+- Select * from daily_attendace; -> muestra los datos de la tabla
+- Describe table daily_attendace; -> muestra la tabla 
+- Describe tables; -> muestra todas las tablas
+
+* Insert data
+
+  Table one: 
+
+    INSERT INTO attendance.daily_attendance (classroomid, classdate, studentid, courseid, attendance) VALUES ('2403','2019-08-23','A01756182','TC3041',2);
+
+   INSERT INTO attendance.daily_attendance (classroom, classdate, studentid, courseid, attendance) VALUES ('2404','2019-08-23','A00226522','TC3041',2);
+
+  Table two:
+
+    INSERT INTO attendance.daily_attendance_v2 (classroomid, classdate, studentid, courseid, attendance) VALUES ('2403','2019-08-23','A01756182','TC3041',2);
+
+    INSERT INTO attendance.daily_attendance_v2 (classroomid, classdate, studentid, courseid, attendance) VALUES ('2403','2019-08-23','A00226522','TC3041',2);
+
+    INSERT INTO attendance.daily_attendance_v2 (classroomid, classdate, studentid, courseid, attendance) VALUES ('2404','2019-08-23','A00226522','TC3041',2);
+
+  Table Three:
+
+    INSERT INTO attendance.daily_attendance_by_studentid (classroomid, classdate, studentid, courseid, attendance) VALUES ('2403','2019-08-23','A01756182','TC3041',2);
+
+    INSERT INTO attendance.daily_attendance_by_studentid (classroomid, classdate, studentid, courseid, attendance) VALUES ('2403','2019-08-23','A00226522','TC3041',2);
+
+    INSERT INTO attendance.daily_attendance_by_studentid (classroomid, classdate, studentid, courseid, attendance) VALUES ('2404','2019-08-23','A00226522','TC3041',2);
+
+  Table fourth:
+
+    INSERT INTO attendance.total_attendance_by_studentid (studentid, courseid, period, totalattendance) VALUES ('A01756182','TC3041','F19',32);
+
+  Table five:
+
+    INSERT INTO attendance.total_attendance_by_semester (courseid, period, totalattendance) VALUES ('TC3041','F19',870);
+
+* Este es un select normal.
+
+  - SELECT * FROM attendance.daily_attendance_v2 WHERE classroomid = '2403';
+
+* Este select no funciona por qeu no cumple con los datos que se necesitan por jerarquía.
+
+  - SELECT * FROM attendance.daily_attendance_v2 WHERE studentid = 'A01756182'; 
+
+* Este seria el select que si nos daria el resultado deseado.
+
+  - SELECT * FROM attendance.daily_attendance_v2 WHERE classroomid = '2403' and classdate = '2019-08-23' and studentid = 'A01756182'; 
+
+  - SELECT attendance FROM daily_attendance_by_studentid WHERE studentid = 'A01756182';
+  - SELECT attendance FROM daily_attendance_by_studentid WHERE studentid = 'A01756182' and courseid = 'TC3041';
+
