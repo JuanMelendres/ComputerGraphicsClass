@@ -1,0 +1,7 @@
+* Create keyspaces:
+
+  -> CREATE KEYSPACE IF NOT EXISTS retail_system WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+  //individual sales, sales by article, sales by month, sales by month and by article,
+* Create column family (create table):
+  
+  -> 
