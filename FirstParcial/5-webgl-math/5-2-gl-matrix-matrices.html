@@ -1,0 +1,49 @@
+<!--4-1 Hello World gl-matrix-->
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<title>glMatrix Examples</title>
+		<meta charset="utf-8">
+		<script src="gl-matrix-min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			"use strict"
+			//Two given Matrices
+			var a = mat3.create();			
+			mat3.set(a,1,2,0,3,4,0,0,0,1);	// major-column-order
+			var b = mat3.fromValues(1,2,0,3,4,0,0,0,1); // major-column-order
+
+			// printing matrices
+			var msg =   "a = " + mat3.str(a) + "\n";
+			msg = msg + "b = " + mat3.str(b) + "\n";
+
+			// a + b
+			var c = mat3.create();	// identity
+			mat3.add(c, a, b);
+			msg = msg + "\na + b = " + mat3.str(c);
+
+			// Product
+			mat3.multiply(c, a, b);
+			msg = msg + "\nab = " + mat3.str(c);
+
+			// Transponse
+			var at = mat3.create();
+			mat3.transpose(at, a);
+			msg = msg + "\nat = " + mat3.str(at);
+
+			// Inverse
+			var aInv = mat3.create();
+			mat3.invert(aInv, a);
+			msg = msg + "\naInv = " + mat3.str(aInv);
+
+			// Multiply
+			var mI = mat3.create();
+			mat3.multiply(mI, a, aInv);
+			msg = msg + "\nI = " + mat3.str(mI);
+
+			alert(msg);
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

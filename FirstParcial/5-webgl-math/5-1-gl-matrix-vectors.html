@@ -1,0 +1,44 @@
+<!--4-1 Hello World gl-matrix-->
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<title>glMatrix Examples</title>
+		<meta charset="utf-8">
+		<script src="gl-matrix-min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			"use strict"
+			//Two given Vectors
+			var a = vec3.create(); 
+			vec3.set(a, 1., 0., 0.);
+			var b = vec3.fromValues(0., 1., 0.);
+
+			// add vectors
+			var c = vec3.create();
+			vec3.add(c, a, b);
+			var msg = "a = " + vec3.str(a) + "\nb= " + vec3.str(b) + "\na+b = " + vec3.str(c);
+
+			// dot product
+			var dot = vec3.dot(a, b);
+			msg = msg + "\na.b = " + dot;
+
+			// cross product
+			vec3.cross(c, a, b);
+			msg = msg + "\na x b = " + vec3.str(c);
+
+			// angle
+			var angle = vec3.angle(a, b);
+			msg = msg + "\nangle = " + angle * 180. / Math.PI + " grados\n";
+
+			// Unit vector (normalize)
+			vec3.set(a, 2., 0., 0.);
+			var u = vec3.create();
+			vec3.normalize(u, a);
+			msg = msg + "u = " + vec3.str(u);
+
+			alert(msg);
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>
