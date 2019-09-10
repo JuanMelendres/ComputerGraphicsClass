@@ -91,7 +91,7 @@ function main()
 	//gl.useProgram(shaderProgram);
 	// Set the the current buffer
 	gl.bindBuffer(gl.ARRAY_BUFFER, colorsBuffer);
-	// "aPosition" attribute configuration
+	// "aColor" attribute configuration
 	// Ask shader program the "aPosition" attribute location
 	var aColorLocation = gl.getAttribLocation(shaderProgram, "aColor");
 	// Attach current buffer to attribute location in the shader program, indicating the type and layout of the data
