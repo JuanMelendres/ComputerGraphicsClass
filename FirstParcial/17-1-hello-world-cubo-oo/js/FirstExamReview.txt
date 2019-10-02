@@ -1,0 +1,24 @@
+-> CREATE KEYSPACE IF NOT EXISTS exam WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+
+-> CREATE TABLE exam.table1 (name text, age int, lastname text, countryoforigin text, cityoforigin text);
+  //Is invalid because we don't have the primary key
+
+-> CREATE TABLE exam.table2 (name text, age int, lastname text, countryoforigin text, cityoforigin text, primary key(name));
+
+   -> INSERT INTO exam.table2 (name) VALUES ('exam1');
+   -> INSERT INTO exam.table2 (name) VALUES ('exam2');
+
+-> CREATE TABLE exam.table3 (name text, age int, lastname text, countryoforigin text, cityoforigin text, primary key(name, lastname));
+
+   -> INSERT INTO exam.table2 (name, lastname) VALUES ('exam1', 'is easy');
+   -> INSERT INTO exam.table2 (name, lastname) VALUES ('exam2', 'is easier');
+
+   -> Select * from exam.table3 where lastname = 'is easy'; //Is invalid because we don't pass the primary key to select the data (skip the primary key)
+
+   -> Select * from exam.table3 where name = 'exam1' and lastname = 'is easy'; // This is correct
+
+
+---------------------------
+
+K-MEANS (clustering)
+
