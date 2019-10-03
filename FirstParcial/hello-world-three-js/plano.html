@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>threejs</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script src="three.min.js"></script>
+    <script>
+        //RENDERER
+        var canvas = document.getElementById("canvas");
+        var renderer = new THREE.WebGLRenderer({canvas: canvas});
+        renderer.setSize(canvas.width, canvas.height);
+        renderer.setClearColor("black");
+
+        // SCENE
+        var scene = new THREE.Scene();
+
+        // CAMERA
+        var camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000 );
+        camera.position.set(0, 0, 5);
+
+        // LIGHTS
+        var light = new THREE.AmbientLight();
+
+        // GEOMETRY
+        var width = 5;
+        var height = 50;
+        var widthSegments = 100;
+        var heightSegments = 100;
+        //var geometry = new THREE.BoxGeometry(1, 1, 1);
+        var geometry = new THREE.PlaneGeometry(width, height, widthSegments, heightSegments);
+
+        // MATERIAL
+        //var material = new THREE.MeshNormalMaterial();
+        var material = new THREE.MeshNormalMaterial({wireframe: true});
+
+        // MESH
+        var mesh = new THREE.Mesh(geometry, material);
+
+        // SCENE GRAPH
+        scene.add(light);
+        scene.add(mesh);
+
+        //RENDER LOOP
+        requestAnimationFrame(render);
+       
+        function render() {
+            renderer.render(scene, camera);
+            mesh.rotation.x = mesh.rotation.x + 0.01;
+            mesh.rotation.y = mesh.rotation.y + 0.01;
+            requestAnimationFrame(render);
+        }
+    </script>
+</body>
+</html>
