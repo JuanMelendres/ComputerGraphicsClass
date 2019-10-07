@@ -1,0 +1,72 @@
+<html>
+<head>
+    <title>threejs</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script src="three.min.js"></script>
+    <script>
+        //RENDERER
+        var canvas = document.getElementById("canvas");
+        var renderer = new THREE.WebGLRenderer({canvas: canvas});
+        renderer.setSize(canvas.width, canvas.height);
+        renderer.setClearColor("black");
+
+        // SCENE
+        var scene = new THREE.Scene();
+
+        // CAMERA
+        var camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000 );
+        camera.position.set(-3, 3, 10);
+        camera.up = new THREE.Vector3(0, 1, 0);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        // LIGHTS
+        // add subtle ambient lighting
+        var ambientLight = new THREE.AmbientLight("white", .2);
+        
+        // This light gets emitted from a single point in one direction, along a cone that increases in size the further from the light it gets.
+        var spotLight = new THREE.SpotLight();
+        spotLight.position.set(0, 10, 0);
+        spotLight.angle = 30 * Math.PI / 180;
+        //spotLight.target.position =  new THREE.Vector3(0, 0, 0);
+
+        // GEOMETRY
+
+        // PLANE
+        var planeGeometry = new THREE.PlaneGeometry(8, 8, 10, 10);
+        var planeMaterial = new THREE.MeshLambertMaterial({color: "grey", wireframe: false});
+        var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.rotation.x = -0.5 * Math.PI;
+
+        // CUBE
+        var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+        var cubeMaterial = new THREE.MeshLambertMaterial({color: "blue", wireframe: false});
+        var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        cube.position.x = -2;
+        cube.position.y = 0.5;
+
+        // SPHERE
+        var sphereGeometry = new THREE.SphereGeometry(1, 10, 10);
+        var sphereMaterial = new THREE.MeshLambertMaterial({color: "green", wireframe: false});
+        var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere.position.y = 1;
+
+        // SCENE GRAPH
+        scene.add(ambientLight);
+        scene.add(spotLight);
+        scene.add(plane);
+        scene.add(cube);
+        scene.add(sphere);
+
+        //RENDER LOOP
+        requestAnimationFrame(render);
+       
+        function render() {
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+        }
+    </script>
+</body>
+</html>
