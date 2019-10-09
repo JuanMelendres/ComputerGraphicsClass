@@ -1,0 +1,79 @@
+<html>
+<head>
+    <title>threejs</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script src="three.min.js"></script>
+    <script>
+        //RENDERER
+        var canvas = document.getElementById("canvas");
+        var renderer = new THREE.WebGLRenderer({canvas: canvas});
+        renderer.setSize(canvas.width, canvas.height);
+        renderer.setClearColor("black");
+
+        // SCENE
+        var scene = new THREE.Scene();
+
+        // CAMERA
+        var camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000 );
+        camera.position.set(0, 1, 8);
+
+        // LIGHTS
+        var spotLight = new THREE.SpotLight();
+        spotLight.position.set(0, 1.5, 8);
+        spotLight.intensity = 2;
+
+        // GEOMETRY
+        var geomCube = new THREE.BoxGeometry(1, 1, 1);
+
+        // MATERIAL
+        var basicMaterial = new THREE.MeshBasicMaterial({
+                                                            color: "blue",
+                                                            wireframe: false
+                                                   });
+        // Takes lighting into account to render non-shiny looking objects
+        var lambertMaterial = new THREE.MeshLambertMaterial({
+                                                                color: "blue",
+                                                                emissive: "skyblue",
+                                                                emissiveIntensity: 0.5
+                                                             });
+
+        var phongMaterial = new THREE.MeshPhongMaterial({
+                                                            color: "blue",
+                                                            specular: "white",
+                                                            shininess: 2
+                                                        });
+        var standardMaterial = new THREE.MeshStandardMaterial({
+                                                                color: "blue",
+                                                                roughness: 0.5,
+                                                                metalness: 0.5
+                                                            });
+
+        // MESH
+        var meshCube1 = new THREE.Mesh(geomCube, lambertMaterial);
+        meshCube1.position.set(-2, 0, 0);
+        var meshCube2 = new THREE.Mesh(geomCube, phongMaterial);
+        var meshCube3 = new THREE.Mesh(geomCube, standardMaterial);
+        meshCube3.position.set(2, 0, 0);
+
+        // SCENE GRAPH
+        scene.add(spotLight);
+        scene.add(meshCube1);
+        scene.add(meshCube2);
+        scene.add(meshCube3);
+
+        //RENDER LOOP
+        requestAnimationFrame(render);
+       
+        function render() {
+            renderer.render(scene, camera);
+            meshCube1.rotation.y = meshCube1.rotation.y + 0.01;
+            meshCube2.rotation.y = meshCube2.rotation.y + 0.01;
+            meshCube3.rotation.y = meshCube3.rotation.y + 0.01;
+            requestAnimationFrame(render);
+        }
+    </script>
+</body>
+</html>
