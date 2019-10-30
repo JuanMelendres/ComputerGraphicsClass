@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{F8512DB3-5AED-9425-F338-1E8463DC198F}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/SimpleRotator.cs">
+    <Files>
+      <File FileName="Assets/Script/SimpleRotator.cs" Line="5" Column="27" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="NormalMapIntencidad" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Script" expanded="True">
+                <Node name="SimpleRotator.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d8bcbe47-96d7-4032-a734-a91105f9cc6c" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
